@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Přidat recept</title>
+    <link rel="stylesheet" href="style_p.css">
+</head>
+<body>
+
+<header>
+    <div class="header-overlay">
+        <h1><span class="orange">Dannyho</span> kuchařka.cz</h1>
+    </div>
+</header>
+
+<section class="form-wrapper">
+
+    <h2 class="section-title">Přidejte vlastní recept</h2>
+
+    <div class="form-container">
+
+        <div class="labels">
+            <label>Název receptu:</label>
+            <label>Země původu:</label>
+            <label>Doba přípravy:</label>
+            <label>Náročnost přípravy:</label>
+        </div>
+
+        <form class="inputs">
+            <input type="text">
+
+            <select>
+                <option>Česká republika</option>
+                <option>USA</option>
+                <option>Itálie</option>
+            </select>
+
+            <input type="time">
+
+            <input type="number" min="1" max="5" value="3">
+        </form>
+
+    </div>
+
+    <div class="submit-circle">+</div>
+
+</section>
+
+</body>
+</html>

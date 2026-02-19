@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: #ededed;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    background: url("header.jpg") center/cover no-repeat;
+    height: 200px;
+    position: relative;
+}
+
+.header-overlay {
+    background: rgba(0,0,0,0.5);
+    height: 120px;
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+}
+
+header h1 {
+    color: white;
+    font-size: 38px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.orange {
+    color: #f77f08;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* ===== KRUHOVÉ TLAČÍTKO ===== */
+
+.add-section {
+    text-align: center;
+    margin-top: -60px;
+}
+
+.circle-btn {
+    width: 130px;
+    height: 130px;
+    background-color: #f77f08;
+    border-radius: 50%;
+    color: white;
+    font-size: 70px;
+    line-height: 130px;
+    margin: auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.add-section p {
+    margin-top: 15px;
+    font-size: 28px;
+}
+
+/* ===== OBSAH ===== */
+
+.content {
+    width: 75%;
+    margin: 60px auto;
+}
+
+.section-title {
+    font-size: 32px;
+    margin-bottom: 20px;
+    display: inline-block;
+    border-bottom: 4px solid black;
+    padding-bottom: 5px;
+}
+
+/* ===== TABULKA ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #cfcfcf;
+}
+
+th {
+    background-color: #f77f08;
+    padding: 20px;
+    font-size: 22px;
+    border: 3px solid black;
+}
+
+td {
+    padding: 25px;
+    text-align: center;
+    font-size: 18px;
+    border: 3px solid black;
+}
+
+.flag {
+    font-size: 30px;
+}
+
+.stars {
+    font-size: 28px;
+    color: gold;
+}
