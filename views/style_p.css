@@ -15,7 +15,7 @@ body {
 
 header {
     background: url("header.jpg") center/cover no-repeat;
-    height: 200px;
+    height: 250px;
     position: relative;
 }
 
@@ -83,6 +83,7 @@ input, select {
     border: none;
     border-radius: 15px;
     background-color: #f77f08;
+    opacity: 80%;
     color: black;
 }
 

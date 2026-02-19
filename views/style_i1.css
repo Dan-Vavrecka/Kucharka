@@ -15,7 +15,7 @@ body {
 
 header {
     background: url("header.jpg") center/cover no-repeat;
-    height: 200px;
+    height: 250px;
     position: relative;
 }
 
@@ -41,6 +41,7 @@ header h1 {
 /* ===== KRUHOVÉ TLAČÍTKO ===== */
 
 .add-section {
+    position: relative;
     text-align: center;
     margin-top: -60px;
 }
@@ -82,7 +83,7 @@ header h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #cfcfcf;
+    background-color: rgb(238, 232, 232);
 }
 
 th {
