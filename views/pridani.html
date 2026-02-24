@@ -9,7 +9,8 @@
 
 <header>
     <div class="header-overlay">
-        <h1><span class="orange">Dannyho</span> kuchařka.cz</h1>
+        <a href="index1.html"><h1><span class="orange">Dannyho</span> kuchařka.cz</h1></a>
+    </div>
     </div>
 </header>
 
@@ -18,29 +19,27 @@
     <h2 class="section-title">Přidejte vlastní recept</h2>
 
     <div class="form-container">
-
         <div class="labels">
             <label>Název receptu:</label>
             <label>Země původu:</label>
             <label>Doba přípravy:</label>
             <label>Náročnost přípravy:</label>
         </div>
-
-        <form class="inputs">
-            <input type="text">
-
-            <select>
+    
+        <form class="inputs" id="recipeForm">
+            <input type="text" name="name">
+            <select name="origin">
                 <option>Česká republika</option>
                 <option>USA</option>
                 <option>Itálie</option>
             </select>
-
-            <input type="time">
-
-            <input type="number" min="1" max="3" value="3">
+            <input type="time" name="prepTime">
+            <input type="number" name="difficulty" min="1" max="3" value="3">
         </form>
-
+        ...
+        <script src="/public/app.js"></script>
     </div>
+    <script src="/public/app.js"></script>
 
     <div class="submit-circle">+</div>
 

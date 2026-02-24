@@ -1,21 +1,23 @@
 const http = require("http");
-const { handleApiUsers } = require("./routes/apiUsers");
-const { handlePages } = require("./routes/pages");
+const { handleApiRecipes } = require("./handlers/apiRecipes");
+const { handlePages } = require("./handlers/pages");
+
+
+
+const PORT = 3000;
 
 const server = http.createServer((req, res) => {
-  // 1) API
-  const apiHandled = handleApiUsers(req, res);
-  if (apiHandled !== false) return;
+  // 1. Zkusíme obsloužit API požadavky (GET/POST /api/recipes)
+  if (handleApiRecipes(req, res)) return;
 
-  // 2) Pages + public
-  const pageHandled = handlePages(req, res);
-  if (pageHandled !== false) return;
+  // 2. Zkusíme obsloužit stránky a statické soubory
+  if (handlePages(req, res)) return;
 
-  // 3) fallback 404
+  // 3. Nenalezeno
   res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
-  res.end("Not Found");
+  res.end("404 - Nenalezeno");
 });
 
-server.listen(3000, () => {
-  console.log("Server běží na http://localhost:3000");
+server.listen(PORT, () => {
+  console.log(`Server běží na http://localhost:${PORT}`);
 });

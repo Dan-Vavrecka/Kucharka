@@ -1,63 +1,42 @@
-async function api(path, options) {
-  const res = await fetch(path, {
-    headers: { "Content-Type": "application/json" },
-    ...options,
-  });
-  const ct = res.headers.get("content-type") || "";
-  const data = ct.includes("application/json") ? await res.json() : await res.text();
-  if (!res.ok) throw { status: res.status, data };
-  return data;
-}
+document.addEventListener("DOMContentLoaded", () => {
+  // Tlačítko pro přechod na přidání (v index1.html)
+  const addBtn = document.querySelector(".circle-btn");
+  if (addBtn) {
+    addBtn.addEventListener("click", () => {
+      window.location.href = "/pridani.html";
+    });
+  }
 
-// CREATE (POST /api/users)
-const createForm = document.getElementById("createForm");
-if (createForm) {
-  createForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const fd = new FormData(createForm);
-    const payload = { name: fd.get("name"), age: Number(fd.get("age")) };
+  // Odeslání formuláře (v pridani.html)
+  const submitBtn = document.querySelector(".submit-circle");
+  const form = document.querySelector("#recipeForm");
 
-    const msg = document.getElementById("createMsg");
-    try {
-      await api("/api/users", { method: "POST", body: JSON.stringify(payload) });
-      window.location.reload();
-    } catch (err) {
-      msg.textContent = "Chyba: " + JSON.stringify(err.data);
-    }
-  });
-}
+  if (submitBtn && form) {
+    submitBtn.addEventListener("click", async (e) => { // přidej 'e' sem
+      e.preventDefault(); // toto zastaví klasické odeslání prohlížečem
+      
+      // tvůj fetch kód...
+  
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
 
-// EDIT (PUT /api/users/:id)
-const editForm = document.getElementById("editForm");
-if (editForm) {
-  editForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const id = editForm.dataset.id;
-    const fd = new FormData(editForm);
-    const payload = { name: fd.get("name"), age: Number(fd.get("age")) };
+      if (!payload.name) return alert("Vyplňte prosím název receptu.");
 
-    const msg = document.getElementById("editMsg");
-    try {
-      await api(`/api/users/${id}`, { method: "PUT", body: JSON.stringify(payload) });
-      window.location.href = `/user/${id}`;
-    } catch (err) {
-      msg.textContent = "Chyba: " + JSON.stringify(err.data);
-    }
-  });
-}
+      try {
+        const res = await fetch("/api/recipes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
 
-// DELETE tlačítka (DELETE /api/users/:id)
-document.addEventListener("click", async (e) => {
-  const btn = e.target.closest("[data-delete-id]");
-  if (!btn) return;
-
-  const id = btn.dataset.deleteId;
-  if (!confirm("Opravdu smazat uživatele #" + id + "?")) return;
-
-  try {
-    await api(`/api/users/${id}`, { method: "DELETE" });
-    window.location.href = "/";
-  } catch (err) {
-    alert("Chyba: " + JSON.stringify(err.data));
+        if (res.ok) {
+          window.location.href = "/index1.html";
+        } else {
+          alert("Chyba při ukládání.");
+        }
+      } catch (err) {
+        console.error("Network error:", err);
+      }
+    });
   }
 });
