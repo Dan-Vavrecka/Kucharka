@@ -2,20 +2,17 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Přidat recept</title>
+    <title>Upravit recept</title>
     <link rel="stylesheet" href="style_p.css">
 </head>
 <body>
-
 <header>
     <div class="header-overlay">
         <a href="index1.html"><h1><span class="orange">Dannyho</span> kuchařka.cz</h1></a>
     </div>
 </header>
-
 <section class="form-wrapper">
-    <h2 class="section-title">Přidejte vlastní recept</h2>
-
+    <h2 class="section-title">Upravit recept</h2>
     <div class="form-container">
         <div class="labels">
             <label>Název receptu:</label>
@@ -23,21 +20,19 @@
             <label>Doba přípravy:</label>
             <label>Náročnost přípravy:</label>
         </div>
-
-        <form class="inputs" id="recipeForm">
-            <input type="text" name="name"> <select name="origin">
+        <form class="inputs" id="editForm">
+            <input type="text" name="name" id="edit-name" required>
+            <select name="origin" id="edit-origin">
                 <option value="Česká republika">Česká republika</option>
                 <option value="USA">USA</option>
                 <option value="Itálie">Itálie</option>
             </select>
-            <input type="time" name="prepTime">
-            <input type="number" name="difficulty" min="1" max="3" value="1">
+            <input type="time" name="prepTime" id="edit-time">
+            <input type="number" name="difficulty" id="edit-diff" min="1" max="3">
         </form>
     </div>
-
-    <div class="submit-circle" id="submitBtn" style="cursor: pointer;">+</div>
+    <div class="submit-circle" id="updateBtn" style="cursor:pointer">✓</div>
 </section>
-
 <script src="app.js"></script>
 </body>
 </html>

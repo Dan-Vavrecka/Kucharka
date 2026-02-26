@@ -1,58 +1,9 @@
 [
   {
-    "id": 1,
-    "name": "1",
-    "origin": "USA",
-    "prepTime": "02:00",
-    "difficulty": 3
-  },
-  {
-    "id": 2,
-    "name": "1",
-    "origin": "USA",
-    "prepTime": "02:00",
-    "difficulty": 3
-  },
-  {
-    "id": 3,
-    "name": "5",
-    "origin": "Itálie",
-    "prepTime": "01:32",
-    "difficulty": 2
-  },
-  {
-    "id": 4,
-    "name": "5",
-    "origin": "Itálie",
-    "prepTime": "01:32",
-    "difficulty": 2
-  },
-  {
-    "id": 5,
-    "name": "5",
-    "origin": "USA",
-    "prepTime": "20:56",
-    "difficulty": 1
-  },
-  {
-    "id": 6,
-    "name": "5",
-    "origin": "USA",
-    "prepTime": "20:56",
-    "difficulty": 1
-  },
-  {
-    "id": 7,
-    "name": "5",
+    "id": 1772092049391,
+    "name": "bůček",
     "origin": "Česká republika",
-    "prepTime": "08:51",
-    "difficulty": 3
-  },
-  {
-    "id": 8,
-    "name": "5",
-    "origin": "Česká republika",
-    "prepTime": "08:51",
-    "difficulty": 3
+    "prepTime": "03:24",
+    "difficulty": "3"
   }
 ]

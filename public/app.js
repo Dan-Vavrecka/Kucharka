@@ -1,42 +1,46 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Tlačítko pro přechod na přidání (v index1.html)
-  const addBtn = document.querySelector(".circle-btn");
-  if (addBtn) {
-    addBtn.addEventListener("click", () => {
-      window.location.href = "/pridani.html";
-    });
+async function deleteRecipe(id) {
+  if (confirm("Smazat?")) {
+      await fetch(`/api/recipes/${id}`, { method: "DELETE" });
+      location.reload();
   }
+}
 
-  // Odeslání formuláře (v pridani.html)
-  const submitBtn = document.querySelector(".submit-circle");
-  const form = document.querySelector("#recipeForm");
+document.addEventListener("DOMContentLoaded", async () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
 
-  if (submitBtn && form) {
-    submitBtn.addEventListener("click", async (e) => { // přidej 'e' sem
-      e.preventDefault(); // toto zastaví klasické odeslání prohlížečem
-      
-      // tvůj fetch kód...
-  
-      const formData = new FormData(form);
-      const payload = Object.fromEntries(formData.entries());
-
-      if (!payload.name) return alert("Vyplňte prosím název receptu.");
-
-      try {
-        const res = await fetch("/api/recipes", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          window.location.href = "/index1.html";
-        } else {
-          alert("Chyba při ukládání.");
-        }
-      } catch (err) {
-        console.error("Network error:", err);
+  // Načtení dat pro editaci
+  if (location.pathname.includes("editace.html") && id) {
+      const res = await fetch(`/api/recipes/${id}`);
+      if (res.ok) {
+          const r = await res.json();
+          document.getElementById("edit-name").value = r.name;
+          document.getElementById("edit-origin").value = r.origin;
+          document.getElementById("edit-time").value = r.prepTime;
+          document.getElementById("edit-diff").value = r.difficulty;
       }
-    });
   }
+
+  // Odesílání (Přidání i Editace)
+  const btn = document.getElementById("submitBtn") || document.getElementById("updateBtn");
+  const form = document.getElementById("recipeForm") || document.getElementById("editForm");
+
+  if (btn && form) {
+      btn.onclick = async (e) => {
+          e.preventDefault();
+          const data = Object.fromEntries(new FormData(form));
+          const method = id ? "PUT" : "POST";
+          const url = id ? `/api/recipes/${id}` : "/api/recipes";
+
+          const res = await fetch(url, {
+              method: method,
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data)
+          });
+          if (res.ok) location.href = "/index1.html";
+      };
+  }
+
+  const addBtn = document.querySelector(".circle-btn");
+  if (addBtn) addBtn.onclick = () => location.href = "/pridani.html";
 });
