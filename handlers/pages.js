@@ -9,18 +9,24 @@ module.exports = {
     handlePages: (req, res) => {
         const url = req.url;
 
-        // 1. Obsluha CSS a JS (Důležité pro vzhled!)
-        if (url.endsWith(".css") || url.endsWith(".js")) {
-            const fileName = path.basename(url);
-            const filePath = path.join(PUBLIC_DIR, fileName);
+        // Obsluha statických souborů (CSS, JS, Obrázky)
+if (url.endsWith(".css") || url.endsWith(".js") || url.endsWith(".jpg") || url.endsWith(".png")) {
+    const fileName = path.basename(url);
+    const filePath = path.join(PUBLIC_DIR, fileName);
 
-            if (fs.existsSync(filePath)) {
-                const contentType = url.endsWith(".css") ? "text/css" : "application/javascript";
-                res.writeHead(200, { "Content-Type": contentType });
-                res.end(fs.readFileSync(filePath));
-                return true;
-            }
-        }
+    if (fs.existsSync(filePath)) {
+        // Určení správného typu obsahu (MIME type)
+        let contentType = "text/plain";
+        if (url.endsWith(".css")) contentType = "text/css";
+        if (url.endsWith(".js"))  contentType = "application/javascript";
+        if (url.endsWith(".jpg")) contentType = "image/jpeg";
+        if (url.endsWith(".png")) contentType = "image/png";
+
+        res.writeHead(200, { "Content-Type": contentType });
+        res.end(fs.readFileSync(filePath));
+        return true;
+    }
+}
 
         // 2. Seznam (index)
         if (url === "/" || url === "/index1.html") {
