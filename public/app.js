@@ -1,46 +1,47 @@
-async function deleteRecipe(id) {
-  if (confirm("Smazat?")) {
-      await fetch(`/api/recipes/${id}`, { method: "DELETE" });
-      location.reload();
-  }
+async function deleteItem(id) {
+    if (confirm("Smazat položku?")) {
+        const res = await fetch(`/delete/${id}`, { method: "DELETE" });
+        if (res.ok) location.reload();
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
+    const path = window.location.pathname;
 
-  // Načtení dat pro editaci
-  if (location.pathname.includes("editace.html") && id) {
-      const res = await fetch(`/api/recipes/${id}`);
-      if (res.ok) {
-          const r = await res.json();
-          document.getElementById("edit-name").value = r.name;
-          document.getElementById("edit-origin").value = r.origin;
-          document.getElementById("edit-time").value = r.prepTime;
-          document.getElementById("edit-diff").value = r.difficulty;
-      }
-  }
+    // Pokud jsme na stránce editace (URL /edit/123)
+    if (path.startsWith("/edit/")) {
+        const id = path.split("/")[2];
+        const res = await fetch(`/item?id=${id}`);
+        if (res.ok) {
+            const r = await res.json();
+            document.getElementById("edit-name").value = r.name;
+            document.getElementById("edit-origin").value = r.origin;
+            document.getElementById("edit-time").value = r.prepTime;
+            document.getElementById("edit-diff").value = r.difficulty;
+        }
 
-  // Odesílání (Přidání i Editace)
-  const btn = document.getElementById("submitBtn") || document.getElementById("updateBtn");
-  const form = document.getElementById("recipeForm") || document.getElementById("editForm");
+        document.getElementById("updateBtn").onclick = async () => {
+            const data = Object.fromEntries(new FormData(document.getElementById("editForm")));
+            const saveRes = await fetch(`/edit/${id}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            if (saveRes.ok) location.href = "/index1.html";
+        };
+    }
 
-  if (btn && form) {
-      btn.onclick = async (e) => {
-          e.preventDefault();
-          const data = Object.fromEntries(new FormData(form));
-          const method = id ? "PUT" : "POST";
-          const url = id ? `/api/recipes/${id}` : "/api/recipes";
-
-          const res = await fetch(url, {
-              method: method,
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(data)
-          });
-          if (res.ok) location.href = "/index1.html";
-      };
-  }
-
-  const addBtn = document.querySelector(".circle-btn");
-  if (addBtn) addBtn.onclick = () => location.href = "/pridani.html";
+    // Stránka přidání
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.onclick = async () => {
+            const data = Object.fromEntries(new FormData(document.getElementById("recipeForm")));
+            const res = await fetch("/items", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) location.href = "/index1.html";
+        };
+    }
 });

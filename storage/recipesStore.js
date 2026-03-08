@@ -6,8 +6,7 @@ const DATA_FILE = path.join(__dirname, "..", "data", "recipes.json");
 function load() {
     try {
         if (!fs.existsSync(DATA_FILE)) return [];
-        const raw = fs.readFileSync(DATA_FILE, "utf-8");
-        return JSON.parse(raw || "[]");
+        return JSON.parse(fs.readFileSync(DATA_FILE, "utf-8") || "[]");
     } catch (e) { return []; }
 }
 
@@ -27,17 +26,11 @@ module.exports = {
             name: data.name, 
             origin: data.origin, 
             prepTime: data.prepTime, 
-            difficulty: Number(data.difficulty) 
+            difficulty: Number(data.difficulty) || 1 
         };
         recipes.push(newRecipe);
         save(recipes);
         return newRecipe;
-    },
-    remove: (id) => {
-        const recipes = load();
-        const filtered = recipes.filter(r => r.id !== Number(id));
-        save(filtered);
-        return recipes.length !== filtered.length;
     },
     update: (id, data) => {
         const recipes = load();
@@ -46,5 +39,11 @@ module.exports = {
         recipes[idx] = { ...recipes[idx], ...data, id: Number(id) };
         save(recipes);
         return recipes[idx];
+    },
+    remove: (id) => {
+        const recipes = load();
+        const filtered = recipes.filter(r => r.id !== Number(id));
+        save(filtered);
+        return recipes.length !== filtered.length;
     }
 };
